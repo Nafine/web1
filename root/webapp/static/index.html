@@ -9,8 +9,8 @@
 <body>
 <header>
     <ul>
-        <li>Веб программирование 1</li>
-        <li>Выполнил Зенченков Павел Геннадьевич <a href="https://github.com/Nafine">github</a></li>
+        <li>Веб-программирование 1 <a href="variant.html">Вариант 1337</a></li>
+        <li>Выполнил Зенченков Павел Геннадьевич P3215 <a href="https://github.com/Nafine/web1">github</a></li>
     </ul>
 </header>
 <main>
@@ -20,26 +20,68 @@
                 <canvas class="graph" id="graph" width="500" height="500"></canvas>
             </td>
             <td>
-                <form id="form" autocomplete="off">
-                    <label for="x">X:</label>
-                    <div class="x" id="x">
-
-                    </div>
-                    <label for="y">Y:</label>
-                    <div class="y" id="y">
-
-                    </div>
-                    <label for="r">R:</label>
-                    <div class="r" id="r">
-
-                    </div>
-
-                </form>
+                <fieldset>
+                    <form id="form" autocomplete="off">
+                        <div class="input" id="x">
+                            X:
+                            <input type="checkbox" id="-3" name="x" value="-3">
+                            <label for="-3">-3</label>
+                            <input type="checkbox" id="-2" name="x" value="-2">
+                            <label for="-2">-2</label>
+                            <input type="checkbox" id="-1" name="x" value="-1">
+                            <label for="-1">-1</label>
+                            <input type="checkbox" id="0" name="x" value="0" checked>
+                            <label for="0">0</label>
+                            <input type="checkbox" id="1" name="x" value="1">
+                            <label for="1">1</label>
+                            <input type="checkbox" id="2" name="x" value="2">
+                            <label for="2">2</label>
+                            <input type="checkbox" id="3" name="x" value="3">
+                            <label for="3">3</label>
+                            <input type="checkbox" id="4" name="x" value="4">
+                            <label for="4">4</label>
+                            <input type="checkbox" id="5" name="x" value="5">
+                            <label for="5">5</label>
+                        </div>
+                        <div class="input" id="y">
+                            <label>
+                                Y:
+                                <input type="text" id="y-input" name="y" pattern="\s*\d+(.\d+)?"
+                                       placeholder="1.23" required>
+                            </label>
+                            <p class="err" id="y-err" hidden>Y coord must be between -5 and 5!</p>
+                        </div>
+                        <button type="submit" id="submit" class="btn-submit" formmethod="get">
+                            <strong>Submit</strong>
+                        </button>
+                    </form>
+                </fieldset>
+                <div class="input" id="r">
+                    <label>
+                        R:
+                        <input type="text" id="r-input" name="r" pattern="\s*\d+(.\d+)?" value="1" required>
+                    </label>
+                    <p class="err" id="r-err" hidden>Radius must be between 1 and 4!</p>
+                </div>
+            </td>
+            <td>
+                <table id="requestTable">
+                    <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>Y</th>
+                        <th>R</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </td>
         </tr>
     </table>
-    <script src="../js/lib/jquery-3.7.1.min.js"></script>
-    <script src="../js/graph.js"></script>
 </main>
+<script src="../js/lib/jquery-3.7.1.min.js"></script>
+<script src="../js/graph/graph.js"></script>
+<script src="../js/input/input.js"></script>
 </body>
 </html>
