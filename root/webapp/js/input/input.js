@@ -35,15 +35,24 @@ function isValidY(y) {
 $('#form').on('submit', function (e) {
     let x = $('input[name="x"]:checked').val();
     let y = $('input[name="y"]').val();
+    let r = $('input[name="r"]').val();
 
     $('#requestTable').prepend(
-        `<tr><td>${x}</td><td>${y}</td></tr>`
+        `<tr><td>${x}</td><td>${y}</td><td>${r}</td></tr>`
     );
 
     e.preventDefault();
 });
 
-$('#requestTable tbody').on('click', 'tr', function () {
+$('#requestTable tbody').on('click mouseenter mouseleave', 'tr', function (event) {
     let cols = $(this).children();
-    console.log(`X:${cols.eq(0).text()} Y:${cols.eq(1).text()}`);
+
+    if (event.type === 'click') {
+        console.log(`X:${cols.eq(0).text()} Y:${cols.eq(1).text()}`);
+    } else if (event.type === 'mouseenter') {
+        cols.css('background-color', '#c0c0c0');
+    }
+    else if (event.type === 'mouseleave') {
+        cols.css('background-color', '#ffffff');
+    }
 });
