@@ -9,9 +9,9 @@ const canvasCfg = {
 $(draw)
 
 function initStyles() {
-    ctx.fillStyle = "rgba(51,153,255,0.8)";
-    ctx.strokeStyle = "rgba(0,0,0,0.8)";
-    ctx.font = "18px serif";
+    ctx.fillStyle = "rgba(51,153,255,0.5)";
+    ctx.strokeStyle = "rgba(0,0,0,1)";
+    ctx.font = "18px Roboto";
 }
 
 function refresh(r) {

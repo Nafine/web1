@@ -38,7 +38,7 @@ $('#form').on('submit', function (e) {
     let r = $('input[name="r"]').val();
 
     $('#requestTable').prepend(
-        `<tr><td>${x}</td><td>${y}</td><td>${r}</td></tr>`
+        `<tr><td>${x}</td><td>${y}</td><td>${r}</td><td>14:88</td><td></td></tr>`
     );
 
     e.preventDefault();
