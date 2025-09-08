@@ -2,7 +2,8 @@ const canvas = document.getElementById("graph");
 const ctx = canvas.getContext("2d");
 
 const canvasCfg = {
-    radius: canvas.width * 0.4,
+    basisR: canvas.width * 0.4,
+    r: 1,
     shift: 10
 }
 
@@ -15,11 +16,11 @@ function initStyles() {
 }
 
 function refresh(r) {
-    labelCfg.r = r;
-    draw(r);
+    canvasCfg.r = r;
+    draw();
 }
 
-function draw(radius = 1) {
+function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     initStyles()
@@ -29,24 +30,55 @@ function draw(radius = 1) {
     drawAxis();
     drawArrows();
 
-    drawText(radius);
+    drawText();
+    drawPoints();
 }
 
 function drawShape() {
     drawCircle(canvas.width / 2, canvas.height / 2, 0, Math.PI / 2);
     ctx.beginPath();
-    ctx.fillRect(canvas.width / 2 - canvasCfg.radius, canvas.height / 2, canvasCfg.radius, canvasCfg.radius / 2);
+    ctx.fillRect(canvas.width / 2 - canvasCfg.basisR, canvas.height / 2, canvasCfg.basisR, canvasCfg.basisR / 2);
     drawTriangle(
         {x: canvas.width / 2, y: canvas.height / 2},
-        {x: canvas.width / 2 + canvasCfg.radius, y: canvas.height / 2},
-        {x: canvas.width / 2, y: canvas.height / 2 - canvasCfg.radius});
+        {x: canvas.width / 2 + canvasCfg.basisR, y: canvas.height / 2},
+        {x: canvas.width / 2, y: canvas.height / 2 - canvasCfg.basisR});
 }
 
 function drawCircle(x, y, startAngle, endAngle) {
     ctx.beginPath();
     ctx.moveTo(x, y);
-    ctx.arc(x, y, canvasCfg.radius, startAngle, endAngle);
+    ctx.arc(x, y, canvasCfg.basisR, startAngle, endAngle);
     ctx.fill();
+}
+
+let dots = []
+
+function addPoint(x, y) {
+    let newDot = {
+        x: x,
+        y: y
+    }
+    dots.push(newDot);
+    drawDot(newDot)
+}
+
+function drawDot(dot, color = 'rgb(0,0,0)', r = canvasCfg.r) {
+    dots.push();
+
+    ctx.save();
+    ctx.fillStyle = color;
+
+    ctx.beginPath();
+    ctx.moveTo(dot.x, dot.y);
+    ctx.arc(canvas.width / 2 + canvasCfg.basisR / r * dot.x,
+        canvas.height / 2 - canvasCfg.basisR / r * dot.y, canvasCfg.basisR / 50, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+}
+
+function drawPoints() {
+    dots.forEach(dot => drawDot(dot));
 }
 
 function drawTriangle(p1, p2, p3) {
@@ -84,22 +116,19 @@ function drawArrows() {
     ctx.stroke();
 }
 
-const labelCfg = {
-    r: 1,
-    labels: [
-        {mult: 1, x: canvasCfg.radius, y: 0},
-        {mult: 1, x: 0, y: canvasCfg.radius},
+const labels = [
+    {mult: 1, x: canvasCfg.basisR, y: 0},
+    {mult: 1, x: 0, y: canvasCfg.basisR},
 
-        {mult: 0.5, x: canvasCfg.radius / 2, y: 0},
-        {mult: 0.5, x: 0, y: canvasCfg.radius / 2},
+    {mult: 0.5, x: canvasCfg.basisR / 2, y: 0},
+    {mult: 0.5, x: 0, y: canvasCfg.basisR / 2},
 
-        {mult: -1, x: -canvasCfg.radius, y: 0},
-        {mult: -1, x: 0, y: -canvasCfg.radius},
+    {mult: -1, x: -canvasCfg.basisR, y: 0},
+    {mult: -1, x: 0, y: -canvasCfg.basisR},
 
-        {mult: -0.5, x: -canvasCfg.radius / 2, y: 0},
-        {mult: -0.5, x: 0, y: -canvasCfg.radius / 2}
-    ]
-}
+    {mult: -0.5, x: -canvasCfg.basisR / 2, y: 0},
+    {mult: -0.5, x: 0, y: -canvasCfg.basisR / 2}
+]
 
 function drawText() {
     drawLabels();
@@ -109,7 +138,7 @@ function drawText() {
 function drawLabels() {
     ctx.save();
     ctx.fillStyle = "black";
-    labelCfg.labels.forEach(label => {
+    labels.forEach(label => {
         drawLabel(label);
         drawTick(label);
     })
@@ -120,7 +149,7 @@ function drawLabel(label) {
     let shiftX = label.x === 0 ? canvasCfg.shift : 0;
     let shiftY = label.y === 0 ? canvasCfg.shift : 0;
 
-    let radius = Math.round(label.mult * labelCfg.r * 100) / 100;
+    let radius = Math.round(label.mult * canvasCfg.r * 100) / 100;
 
     ctx.fillText(radius.toString(), canvas.width / 2 + label.x + shiftX, canvas.height / 2 - label.y - shiftY);
 }

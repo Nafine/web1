@@ -32,27 +32,21 @@ function isValidY(y) {
     return y != null && !isNaN(y) && y >= -5 && y <= 5;
 }
 
-$('#form').on('submit', function (e) {
-    let x = $('input[name="x"]:checked').val();
-    let y = $('input[name="y"]').val();
-    let r = $('input[name="r"]').val();
-
-    $('#requestTable').prepend(
-        `<tr><td>${x}</td><td>${y}</td><td>${r}</td><td>14:88</td><td></td></tr>`
-    );
-
-    e.preventDefault();
-});
-
 $('#requestTable tbody').on('click mouseenter mouseleave', 'tr', function (event) {
-    let cols = $(this).children();
+    let row = $(this).children();
+
+    let x = parseFloat(row.eq(0).text());
+    let y = parseFloat(row.eq(1).text());
+    let r = parseFloat(row.eq(2).text());
+    let hit = row.eq(3).text() === 'true';
 
     if (event.type === 'click') {
-        console.log(`X:${cols.eq(0).text()} Y:${cols.eq(1).text()}`);
-    } else if (event.type === 'mouseenter') {
-        cols.css('background-color', '#c0c0c0');
-    }
-    else if (event.type === 'mouseleave') {
-        cols.css('background-color', '#ffffff');
+        $("#r").val(r);
+        refresh(r)
+        drawDot({x: x, y: y}, 'red');
+    } else if (event.type === 'mouseenter' && hit) {
+        drawDot({x: x, y: y}, 'red');
+    } else if (event.type === 'mouseleave' && hit) {
+        drawDot({x: x, y: y});
     }
 });

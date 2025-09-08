@@ -11,6 +11,7 @@
         :root {
             --strong-orange: #FF6500;
             --lightened-strong-orange: oklch(from var(--strong-orange) calc(l * 1.8) c h);
+            background-color: whitesmoke;
         }
 
         /* Box sizing rules */
@@ -98,6 +99,11 @@
             border-color: rgba(126, 126, 126, 0.15);
         }
 
+        button:hover, button:focus, button:active,
+        input[type="checkbox"]:hover, input[type="checkbox"]:focus, input[type="checkbox"]:active {
+            cursor: pointer;
+        }
+
         input[type="text"] {
             min-height: 2em;
         }
@@ -158,23 +164,49 @@
             width: 100%;
         }
 
+        canvas, fieldset, #requestTable {
+            background-color: white;
+            box-shadow: 2px 2px 2px 2px rgb(235, 235, 235);
+            border-radius: 1em;
+        }
+
         #requestTable {
             position: absolute;
 
-            border: 1px solid #ccc;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             margin: 1em;
-
-            td, th {
-                min-width: 25px;
-                text-align: center;
-                border-bottom: 1px solid #ccc;
-                border-right: 1px solid #ccc;
-                border-radius: 0;
-            }
 
             th {
                 background-color: #f2f2f2;
+            }
+
+            td, th {
+                padding: 0 10px 0 10px;
+                min-width: 25px;
+                text-align: center;
+                border: 1px solid #ccc;
+            }
+
+            tr:not(thead tr):hover {
+                background-color: #c0c0c0;
+                cursor: pointer;
+            }
+
+            tr:first-child th:first-child {
+                border-top-left-radius: 1em;
+            }
+
+            tr:first-child th:last-child {
+                border-top-right-radius: 1em;
+            }
+
+            tr:last-child td:first-child {
+                border-bottom-left-radius: 1em;
+            }
+
+            tr:last-child td:last-child {
+                border-bottom-right-radius: 1em;
             }
         }
 
@@ -196,7 +228,8 @@
     <table>
         <tr>
             <td>
-                <canvas class="graph" id="graph" width="500" height="500"></canvas>
+                <canvas class="graph" id="graph" width="500" height="500"
+                        style="background-color: white; box-shadow: 2px 2px 2px 2px rgb(235,235,235); border-radius: 1em"></canvas>
                 <div class="input center-aligner" id="r">
                     <input type="text" id="r-input" name="r" pattern="\s*\d+(.\d+)?" placeholder="R" value="1" required>
                     <p class="err" id="r-err" hidden>Radius must be between 1 and 4!</p>
@@ -229,7 +262,7 @@
                             </div>
                             <div class="input" id="y">
                                 <div class="center-aligner">
-                                    <input type="text" id="y-input" name="y" pattern="\s*\d+(.\d+)?"
+                                    <input type="text" id="y-input" name="y" pattern="\s*-?\d+(.\d+)?"
                                            placeholder="Y" required>
                                 </div>
                                 <p class="err" id="y-err" hidden>Y coord must be between -5 and 5!</p>
@@ -254,8 +287,8 @@
                             <th>X</th>
                             <th>Y</th>
                             <th>R</th>
-                            <th>Exec. Time</th>
-                            <th>Script time</th>
+                            <th>Hit</th>
+                            <th>Exec. time</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -269,5 +302,6 @@
 <script src="../js/lib/jquery-3.7.1.min.js"></script>
 <script src="../js/graph/graph.js"></script>
 <script src="../js/input/input.js"></script>
+<script src="../js/net/net.js"></script>
 </body>
 </html>
