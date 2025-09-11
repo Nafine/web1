@@ -14,7 +14,7 @@ $(function () {
                 if (rows.length >= 20) {
                     rows.remove(':last-child');
                 }
-                $('#requestTable').prepend(`<tr><td>${x}</td><td>${y}</td><td>${r}</td><td>${data.hit}</td><td>${data.time}ns</td></tr>`);
+                $('#requestTable').prepend(`<tr><td>${x}</td><td>${y}</td><td>${r}</td><td>${data.hit}</td><td>${(new Date).toLocaleString()}</td><td>${data.time}ns</td></tr>`);
                 if (data.hit) addPoint(x, y);
             },
             error: function () {

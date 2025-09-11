@@ -139,9 +139,12 @@
             border-radius: 1.3em;
             padding: 5%;
 
+            transition: background-color 0.3s ease;
+
             &:hover {
                 background-color: oklch(from var(--strong-orange) calc(l * 1.8) c h);
                 color: oklch(from var(--strong-orange) calc(l * 0.5) c h);
+
 
                 svg {
                     fill: white;
@@ -178,6 +181,7 @@
             border-spacing: 0;
             margin: 1em;
 
+
             th {
                 background-color: #f2f2f2;
             }
@@ -187,6 +191,10 @@
                 min-width: 25px;
                 text-align: center;
                 border: 1px solid #ccc;
+            }
+
+            tr {
+                transition: background-color 0.3s ease;
             }
 
             tr:not(thead tr):hover {
@@ -220,7 +228,7 @@
 <header>
     <div id="main-header" class="center-aligner">
         <ul>
-            <li>Веб-программирование 1 <a href="variant.html">Вариант 1337</a></li>
+            <li>Веб-программирование 1 <a href="variant.html">Вариант 321588</a></li>
             <li>Выполнил Зенченков Павел Геннадьевич P3215 <a href="https://github.com/Nafine/web1">github</a></li>
         </ul>
     </div>
@@ -289,6 +297,7 @@
                             <th>Y</th>
                             <th>R</th>
                             <th>Hit</th>
+                            <th>Request time</th>
                             <th>Exec. time</th>
                         </tr>
                         </thead>
@@ -300,9 +309,9 @@
         </tr>
     </table>
 </main>
-<script src="../js/lib/jquery-3.7.1.min.js"></script>
-<script src="../js/graph/graph.js"></script>
-<script src="../js/input/input.js"></script>
-<script src="../js/net/net.js"></script>
+<script src="static/js/lib/jquery-3.7.1.min.js"></script>
+<script src="static/js/graph/graph.js"></script>
+<script src="static/js/input/input.js"></script>
+<script src="static/js/net/net.js"></script>
 </body>
 </html>

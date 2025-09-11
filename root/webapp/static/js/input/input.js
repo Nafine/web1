@@ -1,7 +1,6 @@
-$('input[name="x"]').on("focus", function () {
-        $(`input[name="x"][value!=${$(this).val()}]`).prop('checked', false);
-    }
-);
+$('input[name="x"]').on("change", function () {
+    $('input[name="x"]').not(this).prop('checked', false);
+});
 
 $('input[name="r"]').on("keyup", function () {
     let radius = parseFloat($(this).val());
