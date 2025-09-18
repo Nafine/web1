@@ -208,7 +208,6 @@
             border-spacing: 0;
             margin: 1em auto;
 
-
             th {
                 background-color: #f2f2f2;
             }
@@ -245,10 +244,6 @@
                 border-bottom-right-radius: 1em;
             }
         }
-
-        #main-header {
-            border-bottom: 1px solid lightgray;
-        }
     </style>
 </head>
 <body>
@@ -261,6 +256,11 @@
 </header>
 <main>
     <table>
+        <colgroup>
+            <col style="width: 33%;">
+            <col style="width: 33%;">
+            <col style="width: 33%;">
+        </colgroup>
         <tr>
             <td>
                 <canvas class="graph" id="graph" width="500" height="500"
