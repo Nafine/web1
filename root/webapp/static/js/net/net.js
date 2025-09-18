@@ -1,6 +1,10 @@
 $(function () {
     $("#form").on("submit", function (e) {
+        e.preventDefault();
         let x = $('input[name="x"]:checked').val();
+        if (x === undefined || x === "") {
+            return;
+        }
         let y = $('input[name="y"]').val();
         let r = $('input[name="r"]').val();
 
@@ -21,7 +25,5 @@ $(function () {
                 alert('Error');
             }
         });
-
-        e.preventDefault();
     })
 })
