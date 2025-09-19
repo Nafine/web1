@@ -1,5 +1,11 @@
+let validX = true;
+let validY = false;
+
 $('input[name="x"]').on("change", function () {
     $('input[name="x"]').not(this).prop('checked', false);
+    validX = $(this).filter(':checked').length !== 0;
+    console.log($(this).filter(':checked').length);
+    checkInput();
 });
 
 $('input[name="r"]').on("keyup", function () {
@@ -12,19 +18,27 @@ $('input[name="r"]').on("keyup", function () {
     }
 })
 
+function checkInput(){
+    if (validX && validY) {
+        $('#submit').prop('disabled', false);
+    }else{
+        $('#submit').prop('disabled', true);
+    }
+}
+
 function isValidRadius(radius) {
     return radius != null && !isNaN(radius) && radius >= 1 && radius <= 4;
 }
 
 $('input[name="y"]').on("keyup", function () {
     let y = parseFloat($(this).val());
-    if (!isValidY(y)) {
+    validY = isValidY(y);
+    if (!validY) {
         $('#y-err').addClass('show');
-        $('#submit').prop('disabled', true);
     } else {
         $('#y-err').removeClass('show');
-        $('#submit').prop('disabled', false);
     }
+    checkInput();
 })
 
 function isValidY(y) {
@@ -39,13 +53,13 @@ $('#requestTable tbody').on('click mouseenter mouseleave', 'tr', function (event
     let r = parseFloat(row.eq(2).text());
     let hit = row.eq(3).text() === 'true';
 
-    if (event.type === 'click') {
-        $("#r").val(r);
+    if (event.type === 'click' && hit) {
+        $('input[name="r"]').val(r);
         refresh(r)
         drawDot({x: x, y: y}, 'red');
-    } else if (event.type === 'mouseenter' && hit) {
+    } else if (event.type === 'mouseenter') {
         drawDot({x: x, y: y}, 'red');
-    } else if (event.type === 'mouseleave' && hit) {
-        drawDot({x: x, y: y});
+    } else if (event.type === 'mouseleave') {
+        refresh(parseFloat($('input[name="r"]').val()));
     }
 });

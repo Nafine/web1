@@ -25,10 +25,10 @@ function draw() {
 
     initStyles()
 
-    drawShape();
-
     drawAxis();
     drawArrows();
+
+    drawShape();
 
     drawText();
     drawPoints();
@@ -63,8 +63,6 @@ function addPoint(x, y) {
 }
 
 function drawDot(dot, color = 'rgb(0,0,0)', r = canvasCfg.r) {
-    dots.push();
-
     ctx.save();
     ctx.fillStyle = color;
 
