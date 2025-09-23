@@ -1,27 +1,29 @@
 let validX = true;
 let validY = false;
+let validR = true;
 
-$('input[name="x"]').on("change", function () {
-    $('input[name="x"]').not(this).prop('checked', false);
+$('input[name="x"]').on('change', function () {
     validX = $(this).filter(':checked').length !== 0;
-    console.log($(this).filter(':checked').length);
     checkInput();
 });
 
-$('input[name="r"]').on("keyup", function () {
-    let radius = parseFloat($(this).val());
-    if (!isValidRadius(radius)) {
+$('input[name="r"]').on('keyup', function () {
+    let radius = $(this).val();
+    if (!radius.match($(this).prop('pattern')) || !isValidRadius(parseFloat(radius))) {
         $('#r-err').addClass('show');
+        validR = false;
     } else {
         $('#r-err').removeClass('show');
         refresh(radius);
+        validR = true;
     }
+    checkInput();
 })
 
-function checkInput(){
-    if (validX && validY) {
+function checkInput() {
+    if (validX && validY && validR) {
         $('#submit').prop('disabled', false);
-    }else{
+    } else {
         $('#submit').prop('disabled', true);
     }
 }
@@ -30,10 +32,10 @@ function isValidRadius(radius) {
     return radius != null && !isNaN(radius) && radius >= 1 && radius <= 4;
 }
 
-$('input[name="y"]').on("keyup", function () {
-    let y = parseFloat($(this).val());
-    validY = isValidY(y);
-    if (!validY) {
+$('input[name="y"]').on('keyup', function () {
+    let y = $(this).val();
+    validY = isValidY(parseFloat(y));
+    if (!y.match($(this).prop('pattern')) || !validY) {
         $('#y-err').addClass('show');
     } else {
         $('#y-err').removeClass('show');

@@ -68,8 +68,7 @@ main {
 
     td {
       text-align: center;
-      vertical-align: center;
-      horiz-align: center;
+      vertical-align: middle;
     }
   }
 }
@@ -183,14 +182,23 @@ canvas, fieldset, #requestTable {
   border-radius: $border-radius;
 }
 
-table tr td:nth-child(3) {
-  vertical-align: top;
+main {
+  .main-table {
+    position: relative;
+    tr td:nth-child(3) {
+      vertical-align: top;
+    }
+  }
 }
 
 #requestTable {
   border-collapse: separate;
   border-spacing: 0;
-  margin: 1em auto;
+
+  position: absolute;
+  width: max-content;
+  max-width: 31%;
+  overflow-wrap: break-word;
 
   th {
     background-color: #f2f2f2;
@@ -210,14 +218,10 @@ table tr td:nth-child(3) {
       background-color: $hover-bg;
       cursor: pointer;
     }
-
-    td:nth-child(3) {
-      vertical-align: top;
-    }
   }
 
   tr td:nth-child(3) {
-    vertical-align: top;
+    vertical-align: middle;
   }
 
   tr:first-child {

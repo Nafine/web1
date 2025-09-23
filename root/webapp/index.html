@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Web-1</title>
-    <link rel="icon" href="static/icon/favicon.ico" type="image/x-icon"/>
-    <link rel="apple-touch-icon" href="static/icon/favicon.ico"/>
+    <link rel="icon" href="static/icon/favicon.ico?v=2"/>
+    <link rel="apple-touch-icon" href="static/icon/favicon.ico?v=2"/>
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="static/css/normalize.css">
 </head>
@@ -19,7 +19,7 @@
     <hr>
 </header>
 <main>
-    <table>
+    <table class="main-table">
         <colgroup>
             <col style="width: 33%;">
             <col style="width: 33%;">
@@ -30,8 +30,8 @@
                 <canvas class="graph" id="graph" width="500" height="500"
                         style="background-color: white; box-shadow: 2px 2px 2px 2px rgb(235,235,235); border-radius: 1em"></canvas>
                 <div class="input center-aligner" id="r">
-                    <input type="text" id="r-input" name="r" pattern="\s*\d+(.\d+)?" placeholder="R" value="1" required>
-                    <p class="err" id="r-err">Radius must be between 1 and 4!</p>
+                    <input type="text" id="r-input" name="r" pattern="^\s*-?\d+(\.(\d+)?)?$" placeholder="R" maxlength="8" value="1" required>
+                    <p class="err" id="r-err" >Radius must be between 1 and 4!</p>
                 </div>
             </td>
             <td>
@@ -61,8 +61,8 @@
                             </div>
                             <div class="input" id="y">
                                 <div class="center-aligner">
-                                    <input type="text" id="y-input" name="y" pattern="\s*-?\d+(\.(\d+)?)?"
-                                           placeholder="Y" required>
+                                    <input type="text" id="y-input" name="y" pattern="^\s*-?\d+(\.(\d+)?)?$"
+                                           placeholder="Y" maxlength="8" required>
                                 </div>
                                 <p class="err" id="y-err">Y coord must be between -5 and 5!</p>
                             </div>

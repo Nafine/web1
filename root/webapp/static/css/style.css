@@ -45,8 +45,7 @@ main table {
 }
 main table td {
   text-align: center;
-  vertical-align: center;
-  horiz-align: center;
+  vertical-align: middle;
 }
 
 input, button,
@@ -146,14 +145,20 @@ canvas, fieldset, #requestTable {
   border-radius: 1em;
 }
 
-table tr td:nth-child(3) {
+main .main-table {
+  position: relative;
+}
+main .main-table tr td:nth-child(3) {
   vertical-align: top;
 }
 
 #requestTable {
   border-collapse: separate;
   border-spacing: 0;
-  margin: 1em auto;
+  position: absolute;
+  width: max-content;
+  max-width: 31%;
+  overflow-wrap: break-word;
 }
 #requestTable th {
   background-color: #f2f2f2;
@@ -172,10 +177,7 @@ table tr td:nth-child(3) {
   cursor: pointer;
 }
 #requestTable tr td:nth-child(3) {
-  vertical-align: top;
-}
-#requestTable tr td:nth-child(3) {
-  vertical-align: top;
+  vertical-align: middle;
 }
 #requestTable tr:first-child th:first-child {
   border-top-left-radius: 1em;
