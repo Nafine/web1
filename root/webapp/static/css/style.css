@@ -217,6 +217,9 @@ main .main-table tr td:nth-child(3) {
   display: block;
   margin: 0 auto;
 }
+#pagination-controls #clear-table.btn-submit:hover {
+  color: #fff;
+}
 #pagination-controls #page-info {
   min-width: 3em;
   font-weight: bold;

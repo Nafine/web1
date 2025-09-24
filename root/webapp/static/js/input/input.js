@@ -3,7 +3,6 @@ let validY = false;
 let validR = true;
 
 $('input[name="x"]').on('click', function () {
-    console.log($('input[name="x"]:checked').length);
     validX = $('input[name="x"]:checked').length !== 0;
     checkInput();
 });
