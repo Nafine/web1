@@ -2,8 +2,9 @@ let validX = true;
 let validY = false;
 let validR = true;
 
-$('input[name="x"]').on('change', function () {
-    validX = $(this).filter(':checked').length !== 0;
+$('input[name="x"]').on('click', function () {
+    console.log($('input[name="x"]:checked').length);
+    validX = $('input[name="x"]:checked').length !== 0;
     checkInput();
 });
 
@@ -37,8 +38,10 @@ $('input[name="y"]').on('keyup', function () {
     validY = isValidY(parseFloat(y));
     if (!y.match($(this).prop('pattern')) || !validY) {
         $('#y-err').addClass('show');
+        validY = false;
     } else {
         $('#y-err').removeClass('show');
+        validY = true;
     }
     checkInput();
 })

@@ -30,8 +30,9 @@
                 <canvas class="graph" id="graph" width="500" height="500"
                         style="background-color: white; box-shadow: 2px 2px 2px 2px rgb(235,235,235); border-radius: 1em"></canvas>
                 <div class="input center-aligner" id="r">
-                    <input type="text" id="r-input" name="r" pattern="^\s*-?\d+(\.(\d+)?)?$" placeholder="R" maxlength="8" value="1" required>
-                    <p class="err" id="r-err" >Radius must be between 1 and 4!</p>
+                    <input type="text" id="r-input" name="r" pattern="^\s*-?\d+(\.(\d+)?)?$" placeholder="R"
+                           maxlength="8" value="1" required>
+                    <p class="err" id="r-err">Radius must be between 1 and 4!</p>
                 </div>
             </td>
             <td>
@@ -67,7 +68,7 @@
                                 <p class="err" id="y-err">Y coord must be between -5 and 5!</p>
                             </div>
                             <div class="center-aligner">
-                                <button type="submit" id="submit" class="btn-submit" formmethod="get">
+                                <button type="submit" id="submit" class="btn-submit" formmethod="get" disabled>
                                     <svg role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
                                          aria-label="forward">
                                         <path d="M22.8011 14.75L14.2234 6.70971L16.0474 5L26.8695 15.1441C27.3732 15.6163 27.3732 16.3817 26.8695 16.8538L16.0474 26.998L14.2234 25.2883L22.7989 17.25H4.75V14.75H22.8011Z"></path>
@@ -94,6 +95,33 @@
                         <tbody>
                         </tbody>
                     </table>
+                    <div id="pagination-controls">
+                        <div class="pagination-row">
+                            <button id="page-prev" class="btn-submit" type="button" aria-label="Предыдущая страница">
+                                <svg role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
+                                     aria-label="forward" style="transform: scaleX(-1);">
+                                    <path d="M22.8011 14.75L14.2234 6.70971L16.0474 5L26.8695 15.1441C27.3732 15.6163 27.3732 16.3817 26.8695 16.8538L16.0474 26.998L14.2234 25.2883L22.7989 17.25H4.75V14.75H22.8011Z"></path>
+                                </svg>
+                            </button>
+                            <span id="page-info">1</span>
+                            <button id="page-next" class="btn-submit" type="button" aria-label="Следующая страница">
+                                <svg role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
+                                     aria-label="forward">
+                                    <path d="M22.8011 14.75L14.2234 6.70971L16.0474 5L26.8695 15.1441C27.3732 15.6163 27.3732 16.3817 26.8695 16.8538L16.0474 26.998L14.2234 25.2883L22.7989 17.25H4.75V14.75H22.8011Z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="pagination-row">
+                            <select id="page-size-select">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="15">15</option>
+                            </select>
+                        </div>
+                        <div class="pagination-row">
+                            <button id="clear-table" class="btn-submit" type="button">Clear table</button>
+                        </div>
+                    </div>
                 </div>
             </td>
         </tr>
