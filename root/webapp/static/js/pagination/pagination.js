@@ -28,6 +28,7 @@ function loadPointsFromDB() {
     const request = store.getAll();
 
     request.onsuccess = async () => {
+        let cache = await getCache(1);
         const points = request.result;
         points.forEach(point => {
             const row = createTableRow(point);
@@ -37,10 +38,9 @@ function loadPointsFromDB() {
         renderTable();
 
         if (tableRows.length === 0) {
-            let beginTime = Math.floor(performance.now() * 1000);
-            let cache = await getCache(1);
-            putCache(cache, beginTime);
+            putCache(cache);
         }
+        $('#page-next').prop('disabled', !cache.hasNext);
     };
 }
 
@@ -51,21 +51,28 @@ function savePointToDB(point) {
 }
 
 function deleteLastN(n) {
-    const transaction = db.transaction([storeName], "readwrite");
-    const store = transaction.objectStore(storeName);
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction([storeName], "readwrite");
+        const store = transaction.objectStore(storeName);
 
-    const request = store.openCursor(null, "prev");
+        const request = store.openCursor(null, "prev");
+        let count = 0;
 
-    let count = 0;
-    request.onsuccess = (event) => {
-        const cursor = event.target.result;
-        if (cursor && count < n) {
-            store.delete(cursor.primaryKey);
-            tableRows.splice(tableRows.length - 1 - count, 1);
-            count++;
-            cursor.continue();
-        }
-    };
+        request.onsuccess = (event) => {
+            const cursor = event.target.result;
+            if (cursor && count < n) {
+                store.delete(cursor.primaryKey);
+                tableRows.pop();
+                //console.log('Deleted row');
+                count++;
+                cursor.continue();
+            } else {
+                resolve();
+            }
+        };
+
+        request.onerror = () => reject(request.error);
+    });
 }
 
 function createTableRow(point) {
@@ -88,10 +95,30 @@ function putCache(cachedPage) {
         if (point.hit) addPoint(point.x, point.y);
     })
     renderTable();
-    $('#page-next').prop('disabled', !cachedPage.hasNext);
+    if (currentPage === Math.max(1, Math.ceil(tableRows.length / pageSize)))
+        $('#page-next').prop('disabled', !cachedPage.hasNext);
+}
+
+async function updateLastPage() {
+    let totalPages = Math.max(1, Math.ceil(tableRows.length / pageSize));
+    let cache = await getCache(totalPages);
+    //console.log(`tableRows.length: ${tableRows.length}, totalSize: ${totalPages * pageSize}`);
+    //console.log(`cache size: ${cache.dots.length}`);
+    if (tableRows.length < totalPages * pageSize) {
+        if (cache.dots.length !== 0) {
+            await deleteLastN(tableRows.length % pageSize);
+            putCache(cache);
+        }
+    }
+    //console.log(`disabled: ${!cache.hasNext}`);
+    //console.log(`page: ${currentPage} of ${totalPages}`);
+    if (currentPage === totalPages) {
+        $('#page-next').prop('disabled', !cache.hasNext);
+    }
 }
 
 function renderTable() {
+    //console.log(tableRows.length);
     const tbody = $('#requestTable tbody');
     tbody.empty();
     const start = (currentPage - 1) * pageSize;
@@ -123,22 +150,24 @@ $('#page-next').on('click', async function () {
 
     nextButton.prop('disabled', true);
 
+    let cache = null;
+
     if (tableRows.length < currentPage * pageSize) {
-        let cache = await getCache(currentPage + 1);
+        cache = await getCache(currentPage + 1);
         if (cache.dots.length !== 0)
-            deleteLastN(tableRows.length % pageSize);
+            await deleteLastN(tableRows.length % pageSize);
+        nextButton.prop('disabled', !cache.hasNext);
     }
 
     if (currentPage < totalPages) {
         currentPage++;
         renderTable();
     } else {
-        let cache = await getCache(currentPage + 1);
+        if (cache === null) cache = await getCache(currentPage + 1);
         currentPage++;
         putCache(cache);
+        nextButton.prop('disabled', !cache.hasNext);
     }
-
-    nextButton.prop('disabled', !cache.hasNext);
 });
 
 $('#page-size-select').on('change', async function () {
@@ -146,7 +175,7 @@ $('#page-size-select').on('change', async function () {
     currentPage = 1;
     renderTable();
     if (tableRows.length < pageSize) {
-        deleteLastN(tableRows.length);
+        await deleteLastN(tableRows.length);
         let beginTime = Math.floor(performance.now() * 1000);
         let cache = await getCache(currentPage);
         putCache(cache, beginTime);
